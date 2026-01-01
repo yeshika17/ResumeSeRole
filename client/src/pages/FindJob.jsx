@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../css/FindJob.css";
 import axios from "axios";
-
+import { apiGet } from "./api";
 const FindJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
@@ -60,12 +60,10 @@ const FindJobs = () => {
 
       console.log("🔍 Searching with keyword:", keyword);
 
-      const response = await axios.get(
-        `http://localhost:5000/api/jobs?keyword=${encodeURIComponent(
-          keyword
-        )}&location=${encodeURIComponent(location)}`
-      );
-
+     const response = await apiGet("/api/jobs", {
+  keyword,
+  location,
+});
       const rawJobs = response.data.jobs || response.data || [];
       console.log("📥 Fetched jobs:", rawJobs.length);
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../css/JobSearch.css';
-
+import apiFetch from './api';
 const JobSearch = () => {
   const [keyword, setKeyword] = useState('');
   const [location, setLocation] = useState('');
@@ -24,9 +24,9 @@ const JobSearch = () => {
     setExpandedSources({}); // Reset expanded sources on new search
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/jobs?keyword=${encodeURIComponent(keyword)}&location=${encodeURIComponent(location)}`
-      );
+   const response = await apiFetch(
+  `/api/jobs?keyword=${encodeURIComponent(keyword)}&location=${encodeURIComponent(location)}`
+);
       
       const data = await response.json();
       

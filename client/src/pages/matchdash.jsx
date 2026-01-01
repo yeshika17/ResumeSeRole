@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../css/MatchDash.css';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
+import { apiPost } from "./api";
 const MatchDash = () => {
   const [resume, setResume] = useState(null);
   const [jobDescription, setJobDescription] = useState('');
@@ -34,7 +34,10 @@ const MatchDash = () => {
         formData.append("jobTitle", jobTitle);
       }
 
-      const res = await axios.post("http://localhost:5000/api/analyze", formData);
+      
+
+const res = await apiPost("/api/analyze", formData);
+
       
       // Add jobTitle to the result for job searching
       const resultWithTitle = {
