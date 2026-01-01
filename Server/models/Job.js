@@ -22,7 +22,7 @@ const jobSchema = new mongoose.Schema({
     dateFetched: {
         type: Date,
         default: Date.now,
-        index: true 
+        
     }
 });
 

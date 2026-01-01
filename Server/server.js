@@ -8,6 +8,9 @@ import jobRoute from "./routes/job.routes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
 app.use(cors());
@@ -17,12 +20,6 @@ app.use(express.json());
 app.use("/api/jobs", jobRoute);
 app.use("/api/analyze", analyzeRoute);
 
-app.get("/", (req, res) => {
-  res.send("Server is running ✅");
-});
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
