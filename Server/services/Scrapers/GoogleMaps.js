@@ -1,16 +1,11 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-/**
- * Scrape jobs from Google Maps API (RapidAPI)
- * Filters results to last 24 hours only
- */
 async function scrapeGoogleMaps(keyword, location) {
     const sourceName = 'Google Maps API';
     console.log(`   → ${sourceName}: Fetching...`);
 
-    // Check if API key exists
-    if (!process.env.RAPIDAPI_KEY_GOOGLE_MAPS) {
+    if (!process.env.RAPID_API_KEY) {
         console.log(`   → ${sourceName}: ⚠️ API key not configured`);
         return [];
     }
