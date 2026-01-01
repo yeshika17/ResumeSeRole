@@ -4,8 +4,11 @@ const API_BASE_URL =
 export const apiFetch = (path, options = {}) => {
   return fetch(`${API_BASE_URL}${path}`, options);
 };
-export const apiGet = (path, params = {}) => {
-  return axios.get(`${API_BASE_URL}${path}`, { params });
+export const apiGet = async (path, params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  const res = await fetch(`${API_BASE_URL}${path}?${query}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 };
 
 export const apiPost = async (path, data) => {
@@ -13,7 +16,11 @@ export const apiPost = async (path, data) => {
     method: "POST",
     body: data,
   });
+   if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
   return res.json();
 };
+
 
 export default API_BASE_URL;

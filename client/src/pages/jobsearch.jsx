@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../css/JobSearch.css';
-import apiFetch from './api';
+import { apiFetch } from "./api";
 const JobSearch = () => {
   const [keyword, setKeyword] = useState('');
   const [location, setLocation] = useState('');
@@ -10,39 +10,46 @@ const JobSearch = () => {
   const [hasSearched, setHasSearched] = useState(false);
   const [expandedSources, setExpandedSources] = useState({});
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    
-    if (!keyword || !location) {
-      setError('Please enter both keyword and location');
-      return;
+const handleSearch = async (e) => {
+  e.preventDefault();
+
+  if (!keyword || !location) {
+    setError("Please enter both keyword and location");
+    return;
+  }
+
+  setIsLoading(true);
+  setError(null);
+  setHasSearched(true);
+  setExpandedSources({});
+
+  try {
+    const response = await apiFetch(
+      `/api/jobs?keyword=${encodeURIComponent(keyword)}&location=${encodeURIComponent(location)}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
 
-    setIsLoading(true);
-    setError(null);
-    setHasSearched(true);
-    setExpandedSources({}); // Reset expanded sources on new search
+    const data = await response.json();
+    console.log("Jobs API Response =>", data);
 
-    try {
-   const response = await apiFetch(
-  `/api/jobs?keyword=${encodeURIComponent(keyword)}&location=${encodeURIComponent(location)}`
-);
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setJobs(data.jobs);
-      } else {
-        setError('No jobs found. Try different keywords.');
-        setJobs([]);
-      }
-    } catch (err) {
-      setError('Failed to fetch jobs. Please check your connection.');
+    if (data.success && Array.isArray(data.jobs)) {
+      setJobs(data.jobs);
+    } else {
+      setError("No jobs found. Try different keywords.");
       setJobs([]);
-    } finally {
-      setIsLoading(false);
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Failed to fetch jobs. Please check your server or connection.");
+    setJobs([]);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const handleReset = () => {
     setKeyword('');

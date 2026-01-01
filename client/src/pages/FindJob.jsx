@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../css/FindJob.css";
-import axios from "axios";
 import { apiGet } from "./api";
 const FindJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -59,13 +58,17 @@ const FindJobs = () => {
       const location = filters.location || "india";
 
       console.log("🔍 Searching with keyword:", keyword);
+const data = await apiGet("/api/jobs", { keyword, location });
 
-     const response = await apiGet("/api/jobs", {
-  keyword,
-  location,
-});
-      const rawJobs = response.data.jobs || response.data || [];
-      console.log("📥 Fetched jobs:", rawJobs.length);
+console.log("📥 API DATA:", data);
+
+const rawJobs = Array.isArray(data?.jobs)
+  ? data.jobs
+  : Array.isArray(data)
+  ? data
+  : [];
+
+
 
       const processed = rawJobs.map((job) => ({
         ...job,

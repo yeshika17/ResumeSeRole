@@ -35,20 +35,16 @@ const MatchDash = () => {
       }
 
       
-
 const res = await apiPost("/api/analyze", formData);
 
-      
-      // Add jobTitle to the result for job searching
-      const resultWithTitle = {
-        ...res.data,
-        jobTitle: jobTitle || "Software Developer" // Default if not provided
-      };
-      
-      setMatchResult(resultWithTitle);
-      
-      // Store analysis in localStorage for FindJobs component
-      localStorage.setItem('resumeAnalysis', JSON.stringify(resultWithTitle));
+const resultWithTitle = {
+  ...res,  
+  jobTitle: jobTitle || "Software Developer"
+};
+
+setMatchResult(resultWithTitle);
+localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
+
     } catch (err) {
       console.error(err);
       alert("Backend error while analyzing");
