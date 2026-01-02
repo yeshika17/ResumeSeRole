@@ -5,7 +5,7 @@ const require = createRequire(import.meta.url);
 
 export const extractResumeText = async (filePath) => {
   try {
-    // Import pdf.js-extract
+    
     const PDFExtract = require("pdf.js-extract").PDFExtract;
     const pdfExtract = new PDFExtract();
     

@@ -1,20 +1,20 @@
 import axios from "axios";
 
-// ---- Helper to ensure job links are absolute URLs ----
+
 function normalizeLink(link) {
   if (!link) return "";
 
   // Add https:// if link starts with // or www
-  if (link.startsWith("www.") || link.startsWith("//")) {
+  if (link.startsWith("www.") || link.startsWith("
     return "https://" + link.replace(/^\/+/, "");
   }
 
   // If relative LinkedIn path → prepend base URL
   if (link.startsWith("/")) {
-    return "https://www.linkedin.com" + link;
+    return "https:
   }
 
-  // Already absolute
+  
   return link;
 }
 

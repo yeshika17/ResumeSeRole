@@ -2,13 +2,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
-/**
- * SerpApi Google Jobs Endpoint Scraper
- * API Documentation: https://serpapi.com/google-jobs-api
- * Gets jobs from Google search results
- * Free tier: 100 searches/month
- * Paid: $50/month for 5000 searches
- */
+
 
 export default async function scrapeSerpApiGoogleJobs(keyword, location) {
     try {
@@ -28,8 +22,8 @@ export default async function scrapeSerpApiGoogleJobs(keyword, location) {
                 q: keyword,
                 location: location || 'India',
                 api_key: apiKey,
-                chips: 'date_posted:today', // Last 24 hours
-                lrad: '100' // Radius in km (optional)
+                chips: 'date_posted:today', 
+                lrad: '100' 
             },
             timeout: 15000
         });

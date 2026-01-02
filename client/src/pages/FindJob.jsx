@@ -6,7 +6,7 @@ const FindJobs = () => {
   const [savedJobs, setSavedJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [resumeData, setResumeData] = useState(null);
-  const [searchMode, setSearchMode] = useState(null); // 'all' or 'specific'
+  const [searchMode, setSearchMode] = useState(null); 
 
   const [filters, setFilters] = useState({
     location: "",
@@ -16,7 +16,7 @@ const FindJobs = () => {
 
   const hasFetched = useRef(false);
 
-  /* ---------------- LOAD RESUME + SAVED JOBS ---------------- */
+  
   useEffect(() => {
     const storedAnalysis = localStorage.getItem("resumeAnalysis");
     const storedSavedJobs = localStorage.getItem("savedJobs");
@@ -31,7 +31,7 @@ const FindJobs = () => {
     if (storedSearchMode) setSearchMode(storedSearchMode);
   }, []);
 
-  /* ---------------- FETCH JOBS ONCE ---------------- */
+  
   useEffect(() => {
     if (resumeData && searchMode && !hasFetched.current) {
       hasFetched.current = true;
@@ -39,17 +39,16 @@ const FindJobs = () => {
     }
   }, [resumeData, searchMode]);
 
-  /* ---------------- FETCH JOBS ---------------- */
   const fetchRelevantJobs = async () => {
     setIsLoading(true);
     try {
       let keyword = "";
       
       if (searchMode === "all") {
-        // For all roles: use broad skills from resume
+       
         keyword = resumeData?.strengths?.slice(0, 5).join(" ") || "developer";
       } else {
-        // For specific role: use job title + top skills
+        
         const jobTitle = resumeData?.jobTitle || "";
         const topSkills = resumeData?.strengths?.slice(0, 3).join(" ") || "";
         keyword = `${jobTitle} ${topSkills}`.trim() || "developer";
@@ -89,7 +88,7 @@ const rawJobs = Array.isArray(data?.jobs)
     }
   };
 
-  /* ---------------- IMPROVED MATCH SCORE ---------------- */
+
   const calculateMatchScore = (job, resume) => {
     if (!resume) return 0;
 
@@ -116,17 +115,16 @@ const rawJobs = Array.isArray(data?.jobs)
       });
     }
 
-    // 2. STRENGTH MATCHING (Main scoring mechanism)
+    
     const strengths = resume.strengths || [];
     strengths.forEach((skill) => {
       const skillLower = skill.toLowerCase();
       if (jobText.includes(skillLower)) {
-        score += 12; // Increased from 8
+        score += 12; 
         matchDetails.skillMatches++;
       }
     });
 
-    // 3. KEYWORD MATCHING (if available from resume analysis)
     if (resume.keywordMatches && Array.isArray(resume.keywordMatches)) {
       resume.keywordMatches.forEach((item) => {
         if (item.found) {
@@ -139,28 +137,23 @@ const rawJobs = Array.isArray(data?.jobs)
       });
     }
 
-    // 4. GAP PENALTY (reduce score for missing skills)
     const gaps = resume.gaps || [];
     gaps.forEach((gap) => {
       if (jobText.includes(gap.toLowerCase())) {
-        score -= 3; // Reduced penalty from 5
+        score -= 3; 
         matchDetails.gapPenalty += 3;
       }
     });
 
-    // 5. BASE SCORE (ensure minimum reasonable score)
     if (score === 0 && strengths.length > 0) {
-      score = 15; // Minimum base score if we have resume data
+      score = 15; 
     }
 
-    // 6. NORMALIZE to 0-100 range
-    // If we have many skills, scale appropriately
     const maxPossibleScore = (strengths.length * 12) + (searchMode === "specific" ? 30 : 0);
     if (maxPossibleScore > 0 && score > 0) {
       score = Math.round((score / maxPossibleScore) * 100);
     }
 
-    // Ensure score is within reasonable bounds
     if (score < 10) score = 10;
     if (score > 100) score = 100;
 
@@ -174,7 +167,7 @@ const rawJobs = Array.isArray(data?.jobs)
     return score;
   };
 
-  /* ---------------- SAVE / UNSAVE JOB ---------------- */
+  
   const toggleSaveJob = (job) => {
     let updated;
 
@@ -190,15 +183,14 @@ const rawJobs = Array.isArray(data?.jobs)
 
   const isSaved = (job) => savedJobs.some((j) => j.link === job.link);
 
-  /* ---------------- CHANGE SEARCH MODE ---------------- */
   const handleSearchModeChange = (mode) => {
     setSearchMode(mode);
     localStorage.setItem("searchMode", mode);
-    hasFetched.current = false; // Reset to allow new fetch
-    setJobs([]); // Clear current jobs
+    hasFetched.current = false; 
+    setJobs([]); 
   };
 
-  /* ---------------- FILTERED JOBS ---------------- */
+  
   const filteredJobs = jobs.filter((job) => {
     const title = (job.title || "").toLowerCase();
     const desc = (job.description || "").toLowerCase();
@@ -218,7 +210,7 @@ const rawJobs = Array.isArray(data?.jobs)
     return true;
   });
 
-  /* ---------------- DEBUG INFO ---------------- */
+  
   useEffect(() => {
     if (resumeData) {
       console.log("📊 Resume Analysis Data:", {
@@ -230,8 +222,8 @@ const rawJobs = Array.isArray(data?.jobs)
     }
   }, [resumeData]);
 
-  /* ---------------- UI ---------------- */
-  // Show mode selection if not yet chosen
+  
+  
   if (!searchMode) {
     return (
       <div className="find-jobs-container">

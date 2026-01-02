@@ -29,7 +29,7 @@ export default async function scrapeRemoteOK(keyword) {
         let olderJobs = [];
         
         response.data
-            .slice(1) // Skip metadata
+            .slice(1) 
             .forEach(job => {
                 if (!job || !job.position) return;
                 
@@ -60,7 +60,7 @@ export default async function scrapeRemoteOK(keyword) {
                         olderJobs.push(jobData);
                     }
                 } else {
-                    // No date, add to recent
+                    
                     recentJobs.push(jobData);
                 }
             });

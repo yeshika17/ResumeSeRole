@@ -17,7 +17,7 @@ export default async function scrapeLinkedInJobsAPI(
 
     const url = "https://linkedin-job-search-api.p.rapidapi.com/active-jb-24h";
 
-    // Supports: "India"  OR  ["USA","UK"] → "USA" OR "UK"
+    
     const resolvedLocation =
       Array.isArray(location)
         ? location.map(l => `"${l}"`).join(" OR ")

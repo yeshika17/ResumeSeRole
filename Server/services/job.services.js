@@ -2,9 +2,9 @@ import Job from '../models/Job.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// ============================================================
-// EXISTING SCRAPERS
-// ============================================================
+
+
+
 import scrapeRemoteOK from './Scrapers/remoteok.js';
 import scrapeRemotive from './Scrapers/Remotive.js';
 import scrapeJooble from './Scrapers/Jooble.js';
@@ -22,12 +22,12 @@ import scrapeWeWorkRemotelyRSS from './Scrapers/WeWorkRemotelyRSS.js';
 import scrapeRemotiveRSS from './Scrapers/RemotiveRSS.js';
 import scrapeRemoteOKRSS from './Scrapers/RemoteOKRSS.js';
 
-// NEW: Google Maps API Scraper
+
 import scrapeGoogleMaps from './Scrapers/GoogleMaps.js';
 
-// ============================================================
-// UTIL: DEDUPLICATION
-// ============================================================
+
+
+
 const deduplicateJobs = (jobs) => {
     const map = new Map();
     jobs.forEach(j => {
@@ -136,18 +136,18 @@ export async function fetchAllJobsService(keyword, location) {
         }
     });
 
-    // ============================================================
-    // DEDUPLICATION
-    // ============================================================
+    
+    
+    
     const before = allJobs.length;
     allJobs = deduplicateJobs(allJobs);
 
     console.log(`${'─'.repeat(80)}`);
     console.log(`   AFTER DEDUPLICATION: ${allJobs.length} (removed ${before - allJobs.length})`);
 
-    // ============================================================
-    // SAVE TO DB
-    // ============================================================
+    
+    
+    
     if (allJobs.length > 0) {
         try {
             await Job.insertMany(allJobs, { ordered: false }).catch(() => { });

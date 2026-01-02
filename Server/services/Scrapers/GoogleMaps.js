@@ -26,7 +26,7 @@ async function scrapeGoogleMaps(keyword, location) {
 
         console.log(`   → ${sourceName}: Searching for "${keyword}" in "${location}"`);
 
-        const response = await fetch('https://google-api31.p.rapidapi.com/map', {
+        const response = await fetch('https:
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ async function scrapeGoogleMaps(keyword, location) {
 
         console.log(`   → ${sourceName}: Response status: ${response.status}`);
 
-        // Handle different error cases
+        
         if (response.status === 403) {
             console.log(`   → ${sourceName}: ⚠️ 403 Forbidden - Check your RapidAPI subscription`);
             return [];
@@ -58,7 +58,7 @@ async function scrapeGoogleMaps(keyword, location) {
         const data = await response.json();
         console.log(`   → ${sourceName}: Response received, parsing...`);
 
-        // Check various possible response structures
+        
         let results = [];
         if (data.results && Array.isArray(data.results)) {
             results = data.results;
@@ -76,12 +76,12 @@ async function scrapeGoogleMaps(keyword, location) {
             return [];
         }
 
-        // Filter for last 24 hours
+        
         const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
         
         const jobs = results
             .filter(result => {
-                // Check if result has timestamp/date field
+                
                 const resultDate = result.timestamp 
                     ? new Date(result.timestamp)
                     : result.date 
@@ -92,10 +92,10 @@ async function scrapeGoogleMaps(keyword, location) {
                     ? new Date(result.datePosted)
                     : null;
 
-                // If no date, include it (you can change this to exclude if preferred)
+                
                 if (!resultDate) return true;
 
-                // Only include if within last 24 hours
+                
                 return resultDate >= twentyFourHoursAgo;
             })
             .map(result => ({

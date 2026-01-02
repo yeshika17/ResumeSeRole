@@ -1,12 +1,7 @@
 import axios from 'axios';
 import xml2js from 'xml2js';
 
-/**
- * RemoteOK RSS Feed Scraper
- * RSS Feed: https://remoteok.com/remote-jobs.rss
- * FREE - No API key required!
- * Filters to last 24 hours only
- */
+
 
 export default async function scrapeRemoteOKRSS(keyword) {
     try {
@@ -78,7 +73,7 @@ export default async function scrapeRemoteOKRSS(keyword) {
                     company = parts[1]?.trim() || 'Company';
                 }
                 
-                // Extract location if available
+                
                 let location = 'Remote (Worldwide)';
                 const locationMatch = description.match(/location[:\s]+([^<\n,]+)/i);
                 if (locationMatch) {

@@ -1,6 +1,6 @@
 import { fetchAllJobsService } from '../services/job.services.js';
 import Job from '../models/Job.js';
-const CACHE_DURATION = 24 * 60 * 60 * 1000;
+const CACHE_DURATION = 5 * 60 * 60 * 1000;
 
 export async function getJobs(req, res) {
     const { keyword, location } = req.query;

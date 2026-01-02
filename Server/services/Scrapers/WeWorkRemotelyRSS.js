@@ -1,24 +1,19 @@
 import axios from 'axios';
 import xml2js from 'xml2js';
 
-/**
- * WeWorkRemotely RSS Feed Scraper
- * RSS Feed: https://weworkremotely.com/categories/remote-programming-jobs.rss
- * FREE - No API key required!
- * Filters to last 24 hours only
- */
+
 
 export default async function scrapeWeWorkRemotelyRSS(keyword) {
     try {
         console.log(`\n🔍 [WeWorkRemotely RSS] Fetching jobs from last 24h...`);
         
-        // Multiple RSS feeds for different categories
+        
         const rssFeeds = [
             'https://weworkremotely.com/categories/remote-programming-jobs.rss',
             'https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss',
             'https://weworkremotely.com/categories/remote-design-jobs.rss',
             'https://weworkremotely.com/categories/remote-product-jobs.rss',
-            'https://weworkremotely.com/remote-jobs.rss', // All jobs
+            'https://weworkremotely.com/remote-jobs.rss', 
         ];
         
         let allJobs = [];

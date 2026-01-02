@@ -2,12 +2,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-/**
- * Jobs API via RapidAPI (Unified Multi-Platform)
- * API Documentation: https://rapidapi.com/letscrape-6bRBa3QguO5/api/jobs-api14
- * Multiple job boards in one API
- * Free tier: 100 requests/month
- */
+
 
 export default async function scrapeJobsAPIUnified(keyword, location) {
     try {
@@ -28,7 +23,7 @@ export default async function scrapeJobsAPIUnified(keyword, location) {
                 autoTranslateLocation: 'false',
                 remoteOnly: 'false',
                 employmentTypes: 'fulltime;parttime;intern;contractor',
-                datePosted: 'today', // Last 24 hours
+                datePosted: 'today', 
                 page: '1'
             },
             headers: {

@@ -260,7 +260,7 @@ const handleSearch = async (e) => {
         </>
       )}
 
-      {/* Empty State */}
+      {}
       {hasSearched && !isLoading && jobs.length === 0 && !error && (
         <div className="empty-state">
           <div className="empty-icon">🔍</div>
@@ -269,7 +269,7 @@ const handleSearch = async (e) => {
         </div>
       )}
 
-      {/* Loading State */}
+      {}
       {isLoading && (
         <div className="loading-state">
           <div className="loading-spinner"></div>

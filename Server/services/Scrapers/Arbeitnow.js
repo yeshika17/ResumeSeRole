@@ -25,7 +25,7 @@ export default async function scrapeArbeitnow(keyword, location) {
         
         console.log(`   📊 Total jobs available: ${response.data.data.length}`);
         
-        // Filter to last 24 hours
+        
         const now = Date.now();
         const twentyFourHoursAgo = now - (24 * 60 * 60 * 1000);
         
@@ -39,7 +39,7 @@ export default async function scrapeArbeitnow(keyword, location) {
                         return true;
                     }
                 }
-                return true; // Include if no date
+                return true; 
             })
             .slice(0, 20)
             .map(j => ({

@@ -16,7 +16,7 @@
                  query: `${keyword} in ${location || 'India'}`,
                  page: '1',
                  num_pages: '1',
-                 date_posted: 'today' // LAST 24 HOURS
+                 date_posted: 'today' 
              },
              headers: {
                  'X-RapidAPI-Key': apiKey,

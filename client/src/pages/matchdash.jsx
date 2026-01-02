@@ -63,7 +63,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
   const handleFindJobs = (mode) => {
     // Store the search mode
     localStorage.setItem('searchMode', mode);
-    // Navigate to FindJobs page
+    
     navigate('/Findjob');
   };
 
@@ -182,7 +182,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </p>
             </div>
 
-            {/* Section Scores - Direct from AI */}
+            {}
             {matchResult.sectionScores && (
               <div className="skills-breakdown">
                 <h2>Section Scores</h2>
@@ -210,7 +210,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* Skills Breakdown - Normalized version (if exists) */}
+            {}
             {matchResult.skillsBreakdown && Object.keys(matchResult.skillsBreakdown).length > 0 && (
               <div className="skills-breakdown">
                 <h2>Skills Breakdown</h2>
@@ -237,7 +237,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* Keyword Analysis - Shows matching and missing skills */}
+            {}
             <div className="keywords-section">
               <h2>Keyword Analysis</h2>
               <div className="keywords-grid">
@@ -255,7 +255,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             </div>
 
-            {/* Strengths and Gaps */}
+            {}
             <div className="insights-grid">
               <div className="insight-card strengths">
                 <h3>
@@ -290,7 +290,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             </div>
 
-            {/* Major Weaknesses Section */}
+            {}
             {matchResult.majorWeaknesses && matchResult.majorWeaknesses.length > 0 && (
               <div className="weaknesses-card">
                 <h2>
@@ -305,7 +305,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* Section Scores - Visual representation */}
+            {}
             {matchResult.sectionScores && (
               <div className="section-scores-card">
                 <h2>
@@ -339,7 +339,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* Detailed Section Analysis */}
+            {}
             {matchResult.detailedAnalysis && Object.keys(matchResult.detailedAnalysis).length > 0 && (
               <div className="detailed-analysis-card">
                 <h2>
@@ -373,7 +373,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* Must-Do Improvements (Priority Actions) */}
+            {}
             {matchResult.mustDoImprovements && matchResult.mustDoImprovements.length > 0 && (
               <div className="must-do-card">
                 <h2>
@@ -388,7 +388,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* General Recommendations */}
+            {}
             {matchResult.recommendations && matchResult.recommendations.length > 0 && (
               <div className="recommendations-card">
                 <h2>
@@ -403,7 +403,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* Honest Verdict */}
+            {}
             {matchResult.honestVerdict && (
               <div className="verdict-card">
                 <h2>
@@ -414,7 +414,7 @@ localStorage.setItem("resumeAnalysis", JSON.stringify(resultWithTitle));
               </div>
             )}
 
-            {/* NEW: Job Search Options */}
+            {}
             <div className="job-search-section">
               <h2>
                 <span className="insight-icon">🔍</span>
