@@ -26,15 +26,16 @@ async function scrapeGoogleMaps(keyword, location) {
 
         console.log(`   → ${sourceName}: Searching for "${keyword}" in "${location}"`);
 
-        const response = await fetch('https:
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-rapidapi-host': 'google-api31.p.rapidapi.com',
-                'x-rapidapi-key': process.env.RAPIDAPI_KEY_GOOGLE_MAPS
-            },
-            body: JSON.stringify(requestBody)
-        });
+        const response = await fetch("https://google-api31.p.rapidapi.com/maps/textsearch", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "x-rapidapi-host": "google-api31.p.rapidapi.com",
+        "x-rapidapi-key": process.env.RAPIDAPI_KEY_GOOGLE_MAPS
+    },
+    body: JSON.stringify(requestBody)
+});
+
 
         console.log(`   → ${sourceName}: Response status: ${response.status}`);
 

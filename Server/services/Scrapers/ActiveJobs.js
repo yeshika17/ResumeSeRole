@@ -10,23 +10,16 @@ export default async function scrapeActiveJobsDB(keyword, location) {
       return [];
     }
 
-    const response = await axios.get(
-      "https://active-jobs-db.p.rapidapi.com/active-ats-7d",
-      {
-        params: {
-          limit: 30,
-          offset: 0,
-          title_filter: keyword,
-          location_filter: location || "India",
-          description_type: "text",
-        },
-        headers: {
-          "X-RapidAPI-Key": apiKey,
-          "X-RapidAPI-Host": "active-jobs-db.p.rapidapi.com",
-        },
-        timeout: 15000,
-      }
-    );
+    const response = await fetch("https://google-api31.p.rapidapi.com/maps/textsearch", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "x-rapidapi-host": "google-api31.p.rapidapi.com",
+        "x-rapidapi-key": process.env.RAPIDAPI_KEY_GOOGLE_MAPS
+    },
+    body: JSON.stringify(requestBody)
+});
+
 
     if (!Array.isArray(response.data)) {
       console.log("   ⚠️ Unexpected response format", response.data);
