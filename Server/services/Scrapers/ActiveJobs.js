@@ -1,44 +1,56 @@
 import axios from "axios";
 
 export default async function scrapeActiveJobsDB(keyword, location) {
+  const source = "ActiveJobsDB";
+
   try {
-    console.log("\n🔍 [ActiveJobsDB] Fetching jobs from last 7d...");
+    console.log(`\n🔍 [${source}] Fetching jobs from last 7d...`);
 
     const apiKey = process.env.RAPID_API_KEY;
     if (!apiKey) {
-      console.log("   ⚠️ RapidAPI key not configured");
+      console.log(`   ⚠️ ${source}: RapidAPI key not configured`);
       return [];
     }
 
-    const response = await fetch("https://google-api31.p.rapidapi.com/maps/textsearch", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        "x-rapidapi-host": "google-api31.p.rapidapi.com",
-        "x-rapidapi-key": process.env.RAPIDAPI_KEY_GOOGLE_MAPS
-    },
-    body: JSON.stringify(requestBody)
-});
+    const response = await axios.get(
+      "https://active-jobs-db.p.rapidapi.com/active-ats-7d",
+      {
+        params: {
+          limit: 30,
+          offset: 0,
+          title_filter: keyword || "",
+          location_filter: location || "India",
+          description_type: "text",
+        },
+        headers: {
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": "active-jobs-db.p.rapidapi.com",
+        },
+        timeout: 15000,
+      }
+    );
 
+    const data = response.data;
 
-    if (!Array.isArray(response.data)) {
-      console.log("   ⚠️ Unexpected response format", response.data);
+    if (!Array.isArray(data)) {
+      console.log(`   ⚠️ ${source}: Unexpected response format`, data);
       return [];
     }
 
-    const now = Date.now();
-    const cutoff = now - 24 * 60 * 60 * 1000;
+    const cutoff = Date.now() - 24 * 60 * 60 * 1000;
 
-    const jobs = response.data.map(j => {
-      const posted = j.posted_date ? new Date(j.posted_date) : new Date();
+    const jobs = data.map(j => {
+      const posted =
+        j.posted_date ? new Date(j.posted_date) : new Date();
+
       return {
         title: j.title || "Position",
         company: j.company || j.company_name || "Company",
-        location: j.location || location,
+        location: j.location || location || "India",
         link: j.url || j.apply_url || "",
-        source: "ActiveJobsDB",
+        source,
         description: (j.description || "").slice(0, 200),
-        postedDate: posted,
+        postedDate: posted.toISOString(),
         isRecent: posted.getTime() >= cutoff,
       };
     });
@@ -49,13 +61,13 @@ export default async function scrapeActiveJobsDB(keyword, location) {
     const finalJobs = [...recent, ...older].slice(0, 30);
 
     console.log(
-      `   ✅ ActiveJobsDB: ${recent.length} from 24h, ${older.length} older (total ${finalJobs.length})`
+      `   ✅ ${source}: ${recent.length} in last 24h, ${older.length} older (total ${finalJobs.length})`
     );
 
     return finalJobs;
   } catch (err) {
     console.error(
-      "   ❌ ActiveJobsDB Error:",
+      `   ❌ ${source} Error:`,
       err.response?.data || err.message,
       err.response?.status
     );
